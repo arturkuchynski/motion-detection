@@ -113,6 +113,6 @@ for i in range(0, len(timestamps), 2):
 # export obtained dataframe to css
 df.to_csv("../timestamps.csv")
 
-# cleanup the camera and windows
+# cleanup the camera and destroy windows
 video.stop() if args.get("video", None) is None else video.release()
 cv2.destroyAllWindows()
