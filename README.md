@@ -12,7 +12,7 @@ or `--min-area [value of type int]`
 
 All detected movement is serialized in .csv table using Pandas
 
-### .CSV exemple of moving object occurrences with time intervals
+### .CSV example of moving object occurrences with related time intervals
 
 | Occurrence | Start                      | End                        | 
 |-----------|----------------------------|----------------------------| 
@@ -23,4 +23,4 @@ All detected movement is serialized in .csv table using Pandas
 | 4         | 2018-06-28 11:19:06.324708 | 2018-06-28 11:19:06.559286 | 
 
 ##### Plotting data in your web browser with bokeh
-`python3 src/plot.py`
+To do so, run `python3 src/plot.py` and you'll get a nice and simple plot 
