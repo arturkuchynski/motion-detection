@@ -11,12 +11,14 @@ import time
 ap = argparse.ArgumentParser()
 ap.add_argument("-v", "--video", help="path to the .mp4 file")
 ap.add_argument("-a", "--min-area", type=int, default=1000, help="minimum motion area")
+
+# convert to dictionary
 args = vars(ap.parse_args())
 
 # if the video argument is None, then we are reading from the camera
 if args.get("video", None) is None:
     video = VideoStream(src=0).start()
-    time.sleep(2.0)
+    time.sleep(3.0)
 
 # otherwise, we are reading from a video file
 else:
@@ -24,13 +26,18 @@ else:
 
 # initialize the first frame in the video stream
 first_frame = None
-states = [None, None]  # initial and the last state
+
+# initial and the last state
+states = [None, None]
 timestamps = []
-df = pandas.DataFrame(columns=["Start", "End"])  # dataframe for .csv
+
+# dataframe for .csv
+df = pandas.DataFrame(columns=["Start", "End"])
 
 # loop over the frames of the video
 while True:
     # grab the current frame and initialize state
+    # TODO: Optimize framerate
     frame = video.read()
     frame = frame if args.get("video", None) is None else frame[1]
     state = 0
@@ -100,18 +107,20 @@ while True:
             timestamps.append(datetime.now())
         break
 
-# debug:
-# print(states) 
-# print(timestamps)
-
 # make dataframe of timestamps
 for i in range(0, len(timestamps), 2):
     df = df.append({"Start": timestamps[i],
-                    "End": timestamps
-                    [i + 1]}, ignore_index=True)
+                    "End": timestamps[i + 1]},
+                    ignore_index=True)
 
-# export obtained dataframe to css
-df.to_csv("../timestamps.csv")
+# export obtained dataframe to csv
+df.to_csv("timestamps.csv", encoding='utf-8')
+
+# FIXME: Threading issue
+# in linux csv serialization both with camera stopping 
+# may cause "FATAL: exeption not rethrown" (OpenCV threading issue?)
+# Temporary fix using time.sleep() works well 
+time.sleep(3.0)
 
 # cleanup the camera and destroy windows
 video.stop() if args.get("video", None) is None else video.release()
