@@ -1,7 +1,8 @@
 # motion-detection
 Static camera motion detection using OpenCV 3 with Python 3 
 
-##### Motion can be captured from the webcam or other video-capturing device
+##### Motion can be captured from the webcam or from any other video-capturing device
+
 To run motion capture from video use
 `python3 src/motion_detector.py -v "path/to/.mp4"`
 or
@@ -23,4 +24,4 @@ All detected movement is serialized in .csv table using Pandas
 | 4         | 2018-06-28 11:19:06.324708 | 2018-06-28 11:19:06.559286 | 
 
 ##### Plotting data in your web browser with bokeh
-To do so, run `python3 src/plot.py` and you'll get a nice and simple plot 
+To do so, run `python3 src/plot.py` and you'll get a simple and reusable plot  
